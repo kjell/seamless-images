@@ -75,3 +75,9 @@ function expandRowsToFillWidth() {
     })
   })
 }
+
+var resize
+window.addEventListener('resize', function() {
+  window.cancelAnimationFrame(resize)
+  resize = window.requestAnimationFrame(expandRowsToFillWidth)
+})
