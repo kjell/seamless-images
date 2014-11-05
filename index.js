@@ -65,6 +65,7 @@ api = {
   images: images,
   box: box,
   loaded: loaded,
+  update: update
 }
 
 function expandRowsToFillWidth() {
@@ -82,7 +83,8 @@ function expandRowsToFillWidth() {
 }
 
 var resize
-window.addEventListener('resize', function() {
+function update() {
   window.cancelAnimationFrame(resize)
   resize = window.requestAnimationFrame(expandRowsToFillWidth)
-})
+}
+window.addEventListener('resize', update)
