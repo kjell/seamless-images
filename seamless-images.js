@@ -28,7 +28,7 @@ module.exports = function(images, imageHeight, boxWidth) {
 
   var box = d3.select('body').append('div')
       .attr('id', 'box')
-      .style({width: boxWidth+'vw'})
+      .style({width: boxWidth})
 
   var imgs = box.selectAll('img')
       .data(images)

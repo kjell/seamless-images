@@ -19,5 +19,9 @@ var images = shuffle(image_ids)
   .filter(function(i) { return no_image_ids.indexOf(i) < 0 })
   .map(function(id) { return {id: id} })
 
-seamlessImages(images, '7em', window.location.hash.replace('#', '') || 50)
+var hash = window.location.hash,
+  initialHeight = hash.split('/')[1] || '10em',
+  boxWidth = hash.split('/')[0].replace('#', '') || 100
+
+seamlessImages(images, initialHeight, boxWidth)
 
