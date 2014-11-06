@@ -5,17 +5,7 @@ var image_ids = "10436 105014 107241 108860 109112 109118 109122 112568 113568 1
   .split(' ')
 var no_image_ids = "116725 115352 117153 118304".split(' ')
 
-// Shuffles the input array.
-function shuffle(array) {
-  var m = array.length, t, i;
-  while (m) {
-    i = Math.floor(Math.random() * m--);
-    t = array[m], array[m] = array[i], array[i] = t;
-  }
-  return array;
-}
-
-var images = shuffle(image_ids)
+var images = d3.shuffle(image_ids)
   .filter(function(i) { return no_image_ids.indexOf(i) < 0 })
   .map(function(id) { return {id: id} })
 
