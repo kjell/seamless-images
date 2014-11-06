@@ -4,6 +4,7 @@ module.exports = function(images, imageHeight, boxWidth) {
   var loaded = 0
 
   dispatch.on("loaded", function(image, d) {
+    // TODO: arrange images according to their aspect ratios?
     d.aspectRatio = image.width / image.height
     d.width = image.width
     d.height = image.height
@@ -13,6 +14,9 @@ module.exports = function(images, imageHeight, boxWidth) {
 
   dispatch.on("loadedAll", function(all) {
     images.forEach(function(image, i) {
+      // TODO: this reference to the img element gets cached somehow? When I
+      // change the size of the images and try to re-compute the rows, they
+      // don't change because `img.y` doesn't get updated
       image.img = imgs[0][i]
       image.y = image.img.y
     })
@@ -39,8 +43,9 @@ module.exports = function(images, imageHeight, boxWidth) {
         image.src = this.src
         image.onload = function() { dispatch.loaded(image, d) }
       })
-      .style({height: imageHeight})
+      .style({height: imageHeight}) // TODO: set `max-width` to prevent a portrait images stretching too much?
 
+  // TODO: return this
   api = {
     images: images,
     box: box,
@@ -54,6 +59,8 @@ module.exports = function(images, imageHeight, boxWidth) {
       var rowWidth = row.reduce(function(width, image) { return width += image.img.width }, 0)
       var rowHeight = row[0].img.height
       // Solve for y2: what height should these images be to completely fill the row?
+      // TODO: without `-2` the images expand just enough to break to the next line, fix?
+      // TODO: what's a better name than `y2`?
       var y2 = (box.node().clientWidth-2)/(rowWidth/rowHeight)
       row.forEach(function(image) {
         image.img.setAttribute('class', 'row-'+i)
